@@ -11,12 +11,14 @@ import UIKit
 class ViewController: UIViewController {
 
 
+    @IBOutlet weak var RestoreButton: UIButton!
     @IBOutlet weak var currentNumberField: UITextField!
     
     var selectedOperator = "÷"
     var firstNum = 0.0
     var secondNum = 0.0
     var calculator:Calculator = Calculator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -46,12 +48,18 @@ class ViewController: UIViewController {
         case "-":
             result = calculator.subtract(number1: firstNum, number2: secondNum)
         default:
-            result = firstNum
+            result = result + 0
         }
-        currentNumberField.text = "\(result)"
+        RestoreButton.setTitle("\(firstNum) \(selectedOperator) \(secondNum) = \(Int(result))", for: .normal) 
+        currentNumberField.text = "\(Int(result))"
+        selectedOperator = "="
     }
     @IBAction func clearPressed(_ sender: Any) {
         currentNumberField.text = ""
+    }
+    
+    @IBAction func RestoreButtonPressed(_ sender: Any) {
+        currentNumberField.text = "\(Int(firstNum))"
     }
     
 }
